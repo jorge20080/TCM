@@ -1,4 +1,7 @@
-export type Schema = NoKey | PrimaryKey | ForeignKey;
+export type Schema = {
+    tableName: string,
+    tableSchema: NoKey | PrimaryKey | ForeignKey;
+}
 
 type PrimaryKey = {
     [key: string]: {
@@ -21,8 +24,7 @@ type ForeignKey = {
 
 type NoKey = {
     [key: string]: {
-        key?: undefined,
-        type: "INTEGER" | "STRING" | "BOOLEAN",
+        type: "INTEGER" | "TEXT" | "BOOLEAN",
         required?: true,
         unique?: true
     }

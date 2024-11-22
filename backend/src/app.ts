@@ -3,6 +3,7 @@ import { config } from 'dotenv';
 import authRouter from './routes/auth';
 import { Database } from './database/database';
 import { Schema } from './types/schema';
+import { userSchema } from './database/schemas/users';
 
 config();
 const app = express();
@@ -15,10 +16,4 @@ app.listen(process.env.PORT, () => {
     console.log(`Connected to \x1b[35mhttp://localhost:${process.env.PORT}\x1b[0m`);
 });
 
-const schema: Schema = {
-    testing: {
-        key: "PRIMARY",
-        type: "INTEGER"
-    }
-}
-export const db = new Database("tcm.db", [schema]).getConnection();
+export const db = new Database("tcm.db", [userSchema]).getConnection();

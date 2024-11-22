@@ -16,6 +16,6 @@ export class Database {
     }
 
     generateTable(schema: Schema) {
-        //console.log(Object.values(schema)[0]["type"]);
+        let sql = `CREATE TABLE IF EXISTS ${''}`
     }
 }
