@@ -1,14 +1,26 @@
 import { Database as Db } from 'sqlite3';
 import { Schema } from '../types/schema';
+import mysql from 'mysql';
 
 export class Database {
-    private connection: undefined | Db;
+    private connection: undefined | mysql.Connection;
 
     constructor(name: string, schemas: Schema[]) {
-        this.connection = new Db(name);
-        schemas.map(schema => {
-            this.generateTable(schema);
-        })
+        this.connection = mysql.createConnection({
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASSWORD,
+            //database: name
+        });
+
+        this.connection.query(`CREATE DATABASE IF NOT EXISTS ${name}`, (err, result) => {
+            console.log("Database created");
+            if (this.connection) this.connection.config.database = name;
+            schemas.map(schema => {
+                this.generateTable(schema);
+            });
+        });
+
     }
 
     getConnection() {
@@ -16,6 +28,26 @@ export class Database {
     }
 
     generateTable(schema: Schema) {
-        let sql = `CREATE TABLE IF EXISTS ${''}`
+        const keys = Object.keys(schema.tableSchema);
+        const values = Object.values(schema.tableSchema);
+        let sql = `CREATE TABLE IF NOT EXISTS ${schema.tableName} (`;
+
+        keys.forEach((key, idx) => {
+            sql += `${key}`;
+            sql += ` ${values[idx]["type"]}`;
+
+            if (idx !== keys.length - 1) {
+                if (values[idx]["key"] === "PRIMARY") {
+                    sql += " PRIMARY KEY NOT NULL";
+                    if (values[idx]["autoIncrement"]) {
+                        sql += " AUTO_INCREMENT";
+                    };
+                }
+                sql += ", ";
+            } else {
+                sql += ")";
+            }
+        })
+        this.connection?.query(sql)
     }
 }
