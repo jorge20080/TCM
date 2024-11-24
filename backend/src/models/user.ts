@@ -2,7 +2,6 @@ import { BaseModel } from "./baseModel";
 import { TUser } from "../types/user";
 
 export class User extends BaseModel {
-    userId: undefined | number;
     givenName: string;
     lastName: string;
     email: string;
@@ -13,7 +12,7 @@ export class User extends BaseModel {
 
     constructor(user: TUser) {
         super();
-        this.userId = user.userId;
+        this.id = user.userId;
         this.givenName = user.givenName;
         this.lastName = user.lastName;
         this.email = user.email;

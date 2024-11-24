@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { z } from 'zod';
+import { User } from '../models/user';
 
 const authRouter = Router();
 
@@ -11,8 +12,9 @@ const loginValidation = z.object({
     confirmPassword: z.string()
 }).refine(({ confirmPassword, password }) => confirmPassword === password, { message: "Password do not match" });
 
-authRouter.get("/", (req, res) => {
-    res.json({ message: "auth test" })
+authRouter.get("/", async (req, res) => {
+    const test = await User.getAll();
+    res.json(test);
 });
 authRouter.post("/signup", (req, res) => {
     const { givenname, lastname, email, password } = req.body;
