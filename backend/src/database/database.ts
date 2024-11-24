@@ -1,6 +1,6 @@
 import { Database as Db } from 'sqlite3';
 import { Schema } from '../types/schema';
-import mysql from 'mysql';
+import mysql, { createConnection } from 'mysql';
 
 export class Database {
     private connection: undefined | mysql.Connection;
@@ -15,7 +15,13 @@ export class Database {
 
         this.connection.query(`CREATE DATABASE IF NOT EXISTS ${name}`, (err, result) => {
             console.log("Database created");
-            if (this.connection) this.connection.config.database = name;
+            this.connection?.destroy();
+            this.connection = createConnection({
+                host: process.env.DB_HOST,
+                user: process.env.DB_USER,
+                password: process.env.DB_PASSWORD,
+                database: name
+            })
             schemas.map(schema => {
                 this.generateTable(schema);
             });
