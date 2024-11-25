@@ -1,5 +1,7 @@
 import { BaseModel } from "./baseModel";
 import { TUser } from "../types/user";
+import bcryptjs from "bcryptjs";
+import crypto from "crypto";
 
 export class User extends BaseModel {
     givenName: string;
@@ -16,9 +18,8 @@ export class User extends BaseModel {
         this.givenName = user.givenName;
         this.lastName = user.lastName;
         this.email = user.email;
-        this.password = user.password;
-        this.isVerified = user.isVerified;
-        this.verificationToken = user.verificationToken;
-        this.resetToken = user.resetToken;
+        this.password = bcryptjs.hashSync(user.password, 12);
+        this.isVerified = false;
+        this.verificationToken = crypto.randomUUID();
     }
 }

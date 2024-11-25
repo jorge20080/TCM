@@ -11,8 +11,8 @@ export class BaseModel {
                 const hiddenValues = values.map(() => "?");
                 let sql = `INSERT INTO ${this.constructor.name.toLowerCase()}s (`
                 sql += keys.toString() + ")" + " VALUES (" + hiddenValues.toString() + ")";
-                db.connection?.query(sql, values, (err) => {
-                    console.log(err);
+                db.connection?.query(sql, values, (err, result) => {
+                    resolve(result);
                 })
             } else {
 
