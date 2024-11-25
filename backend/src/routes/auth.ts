@@ -13,8 +13,17 @@ const loginValidation = z.object({
 }).refine(({ confirmPassword, password }) => confirmPassword === password, { message: "Password do not match" });
 
 authRouter.get("/", async (req, res) => {
-    const test = await User.getAll();
-    res.json(test);
+    //const test = await User.getAll();
+    //res.json(test);
+    const user = new User({
+        givenName: "Jorge",
+        lastName: "Reyes",
+        email: "jorge20080@hotmail.com",
+        password: "1234",
+        isVerified: true,
+    });
+    user.save();
+    res.json("aa");
 });
 authRouter.post("/signup", (req, res) => {
     const { givenname, lastname, email, password } = req.body;

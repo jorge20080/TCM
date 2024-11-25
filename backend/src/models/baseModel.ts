@@ -5,8 +5,19 @@ export class BaseModel {
 
     save() {
         return new Promise((resolve) => {
-            let sql = `INSERT`
-        })
+            if (this.id === undefined) {
+                const keys = Object.keys(this);
+                const values = Object.values(this).map(value => value === undefined ? null : value);
+                const hiddenValues = values.map(() => "?");
+                let sql = `INSERT INTO ${this.constructor.name.toLowerCase()}s (`
+                sql += keys.toString() + ")" + " VALUES (" + hiddenValues.toString() + ")";
+                db.connection?.query(sql, values, (err) => {
+                    console.log(err);
+                })
+            } else {
+
+            }
+        });
     }
     static getAll(): Promise<[]> {
         return new Promise((resolve) => {

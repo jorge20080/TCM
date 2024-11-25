@@ -3,7 +3,7 @@ import { Schema } from "../../types/schema";
 export const userSchema: Schema = {
     tableName: "users",
     tableSchema: {
-        userId: {
+        id: {
             key: "PRIMARY",
             type: "INTEGER",
             autoIncrement: true

@@ -12,7 +12,7 @@ export class User extends BaseModel {
 
     constructor(user: TUser) {
         super();
-        this.id = user.userId;
+        this.id = user.id;
         this.givenName = user.givenName;
         this.lastName = user.lastName;
         this.email = user.email;

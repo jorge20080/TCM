@@ -34,7 +34,9 @@ export class Database {
         keys.forEach((key, idx) => {
             sql += `${key}`;
             sql += ` ${values[idx]["type"]}`;
-
+            if (values[idx]["required"] === true) {
+                sql += " NOT NULL";
+            }
             if (idx !== keys.length - 1) {
                 if (values[idx]["key"] === "PRIMARY") {
                     sql += " PRIMARY KEY NOT NULL";
