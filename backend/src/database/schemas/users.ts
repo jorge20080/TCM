@@ -9,19 +9,24 @@ export const userSchema: Schema = {
             autoIncrement: true
         },
         givenName: {
-            type: "TEXT",
+            type: "VARCHAR",
+            length: 30,
             required: true
         },
         lastName: {
-            type: "TEXT",
+            type: "VARCHAR",
+            length: 30,
             required: true
         },
         email: {
-            type: "TEXT",
-            required: true
+            type: "VARCHAR",
+            required: true,
+            length: 30,
+            unique: true
         },
         password: {
-            type: "TEXT",
+            type: "VARCHAR",
+            length: 100,
             required: true
         },
         isVerified: {
@@ -29,10 +34,12 @@ export const userSchema: Schema = {
             required: true
         },
         verificationToken: {
-            type: "TEXT",
+            type: "VARCHAR",
+            length: 50,
         },
         resetToken: {
-            type: "TEXT"
+            type: "VARCHAR",
+            length: 50,
         }
     }
 }

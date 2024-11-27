@@ -1,9 +1,10 @@
+import { MysqlError } from "mysql";
 import { db } from "../app";
 
 export class BaseModel {
     id: undefined | number;
 
-    save() {
+    save(): Promise<{ error: MysqlError | null, data: any }> {
         return new Promise((resolve) => {
             if (this.id === undefined) {
                 const keys = Object.keys(this);
@@ -12,7 +13,7 @@ export class BaseModel {
                 let sql = `INSERT INTO ${this.constructor.name.toLowerCase()}s (`
                 sql += keys.toString() + ")" + " VALUES (" + hiddenValues.toString() + ")";
                 db.connection?.query(sql, values, (err, result) => {
-                    resolve(result);
+                    resolve({ error: err, data: result });
                 })
             } else {
 

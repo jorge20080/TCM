@@ -30,13 +30,21 @@ export class Database {
         const keys = Object.keys(schema.tableSchema);
         const values = Object.values(schema.tableSchema);
         let sql = `CREATE TABLE IF NOT EXISTS ${schema.tableName} (`;
+        let constraints = "";
 
         keys.forEach((key, idx) => {
+
             sql += `${key}`;
             sql += ` ${values[idx]["type"]}`;
+            if (values[idx]["type"] === "VARCHAR") {
+                sql += `(${values[idx]["length"]})`
+            }
             if (values[idx]["required"] === true) {
                 sql += " NOT NULL";
             }
+            if (values[idx]["unique"]) {
+                sql += " UNIQUE";
+            };
             if (idx !== keys.length - 1) {
                 if (values[idx]["key"] === "PRIMARY") {
                     sql += " PRIMARY KEY NOT NULL";
@@ -46,9 +54,9 @@ export class Database {
                 }
                 sql += ", ";
             } else {
-                sql += ")";
+                sql += constraints + ");";
             }
         })
-        this.connection?.query(sql)
+        this.connection?.query(sql);
     }
 }

@@ -27,5 +27,10 @@ type NoKey = {
         type: "INTEGER" | "TEXT" | "BOOLEAN",
         required?: true,
         unique?: true
+    } | {
+        type: "VARCHAR",
+        length: number,
+        required?: true,
+        unique?: true
     }
 }

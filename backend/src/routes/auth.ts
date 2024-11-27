@@ -18,11 +18,15 @@ authRouter.get("/", async (req, res) => {
     const user = new User({
         givenName: "Jorge",
         lastName: "Reyes",
-        email: "jorge20080@hotmail.com",
+        email: "jorge200801@hotmail.com",
         password: "1234",
         isVerified: true,
     });
-    const result = await user.save();
+    const { error, data } = await user.save();
+    if (error) {
+        res.json(error);
+        return;
+    }
     res.json(test);
 });
 authRouter.post("/signup", (req, res) => {
