@@ -3,7 +3,6 @@ import { db } from "../app";
 
 export class BaseModel {
     id: undefined | number;
-
     save(): Promise<{ error: MysqlError | null, data: any }> {
         return new Promise((resolve) => {
             if (this.id === undefined) {
@@ -20,7 +19,8 @@ export class BaseModel {
             }
         });
     }
-    static getAll(): Promise<[]> {
+    static getAll<T>(): Promise<T[]> {
+        console.log(this.prototype);
         return new Promise((resolve) => {
             let sql = `SELECT * FROM ${this.name}s`;
             db?.connection?.query(sql, (err, data) => {

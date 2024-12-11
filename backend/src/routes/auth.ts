@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { z } from 'zod';
-import { User } from '../models/user';
+import { postLogin, postSignup, putGenerateResetToken, putResetPassword, putVerifyEmail } from '../controller/auth';
 
 const authRouter = Router();
 
-const loginValidation = z.object({
+const signupValidation = z.object({
     givenname: z.string().min(2, { message: "Given Name should be at least 2 characters" }),
     lastname: z.string().min(2, { message: "Last Name should be at least 2 characters" }),
     email: z.string().email(),
@@ -12,27 +12,15 @@ const loginValidation = z.object({
     confirmPassword: z.string()
 }).refine(({ confirmPassword, password }) => confirmPassword === password, { message: "Password do not match" });
 
-authRouter.get("/", async (req, res) => {
-    const test = await User.getAll();
-    //res.json(test);
-    const user = new User({
-        givenName: "Jorge",
-        lastName: "Reyes",
-        email: "jorge200801@hotmail.com",
-        password: "1234",
-        isVerified: true,
-    });
-    const { error, data } = await user.save();
-    if (error) {
-        res.json(error);
-        return;
-    }
-    res.json(test);
+const loginValidation = z.object({
+    email: z.string().email(),
+    password: z.string().min(8, { message: "Password should be at least 8 characters" }),
 });
-authRouter.post("/signup", (req, res) => {
-    const { givenname, lastname, email, password } = req.body;
-    const isValid = loginValidation.safeParse(req.body);
-    res.json(isValid)
-})
+
+authRouter.post("/signup", postSignup);
+authRouter.post("/login", postLogin);
+authRouter.put("/verifyEmail", putVerifyEmail);
+authRouter.put("/generateResetToken", putGenerateResetToken);
+authRouter.put("/resetPassword", putResetPassword);
 
 export default authRouter;
