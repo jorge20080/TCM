@@ -8,7 +8,7 @@ const TextBox = ({ label, type, placeholder }: TProps) => {
         <label className="font-semibold text-gray-800">
             {label}
             <input
-                className="border-b-2 border-gray-200 block focus:outline-none focus:border-blue-500 mb-6 w-full"
+                className="border-b-2 font-normal border-gray-200 block focus:outline-none focus:border-blue-500 mb-6 w-full"
                 type={type}
                 placeholder={placeholder}
             />
