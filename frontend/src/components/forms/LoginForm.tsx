@@ -6,8 +6,8 @@ import Logo from "../Logo";
 const LoginForm = () => {
     return (
         <div className="min-h-screen grid bg-gray-50">
-            <form className="shadow-2xl px-10 py-14 w-[400px] m-auto bg-white">
-                <Logo className="text-center mb-10" />
+            <form className="shadow-2xl px-10 py-12 w-[400px] m-auto bg-white">
+                <Logo className="text-center mb-8" />
                 <TextBox label="Email" type="text" placeholder="john@mail.com" />
                 <TextBox label="Password" type="password" placeholder="Pass123" />
                 <p className="text-gray-400 -translate-y-4 text-end text-sm">Forgot password? <Link to="/" className="text-blue-500">Reset</Link></p>
