@@ -14,7 +14,12 @@ export const postSignup = async (req: Request, res: Response) => {
     res.json({ message: "added" });
 }
 export const postLogin = async (req: Request, res: Response) => {
-
+    const user = await User.findBy({ email: "jorge2003@hotmail.com" });
+    if (!user) {
+        res.status(400).json({ message: "not found" });
+        return;
+    }
+    res.json(user);
 }
 export const putVerifyEmail = (req: Request, res: Response) => {
     res.json();

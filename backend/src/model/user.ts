@@ -9,6 +9,12 @@ type TUser = {
     password: string;
 }
 
+type TCondition = {
+    id?: string,
+    email?: string,
+    password?: string
+}
+
 export class User {
     id: string | undefined;
     firstName: string = "";
@@ -24,10 +30,16 @@ export class User {
         this.password = user.password;
     }
 
-    static async findAll() {
+    static async findBy({ id, email, password }: TCondition) {
         try {
-            const users = await prisma.user.findMany();
-            return users;
+            const user = await prisma.user.findUnique({
+                where: {
+                    id,
+                    email,
+                    password
+                }
+            });
+            return user;
         } catch {
             return;
         }
