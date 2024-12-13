@@ -1,9 +1,19 @@
 import { Request, Response } from "express";
-import { User } from "../models/user";
+import { prisma } from "../app";
 
-export const postSignup = (req: Request, res: Response) => {
-    User.getAll();
-    res.json();
+export const postSignup = async (req: Request, res: Response) => {
+    const user = await prisma.user.create(
+        {
+            data: {
+                firstName: "Jorge",
+                lastName: "Reyes",
+                email: "jorge20080@hotmail.com",
+                password: "1234"
+            }
+        }
+    );
+    const foundUsers = await prisma.user.findMany();
+    res.json(foundUsers);
 }
 export const postLogin = (req: Request, res: Response) => {
     res.json();
