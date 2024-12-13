@@ -4,7 +4,9 @@ import authRouter from './routes/auth';
 import { PrismaClient } from '@prisma/client';
 
 config();
+
 export const prisma = new PrismaClient();
+
 const app = express();
 
 app.use(express.json());
