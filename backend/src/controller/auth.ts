@@ -1,27 +1,20 @@
 import { Request, Response } from "express";
-import { prisma } from "../app";
+import { User } from "../model/user";
 
 export const postSignup = async (req: Request, res: Response) => {
-    try {
-        const user = await prisma.user.create(
-            {
-                data: {
-                    firstName: "Jorge",
-                    lastName: "Reyes",
-                    email: "jorge200800@hotmail.com",
-                    password: "1234"
-                }
-            }
-        );
-    } catch {
-        res.json({ message: "error" });
+    const { firstName, lastName, email, password } = req.body;
+    const user = new User({ firstName, lastName, email, password });
+    const result = await user.save();
+
+    if (!result) {
+        res.status(400).json({ message: "error" })
         return;
     }
-    const foundUsers = await prisma.user.findMany();
-    res.json(foundUsers);
+
+    res.json({ message: "added" });
 }
-export const postLogin = (req: Request, res: Response) => {
-    res.json();
+export const postLogin = async (req: Request, res: Response) => {
+
 }
 export const putVerifyEmail = (req: Request, res: Response) => {
     res.json();
