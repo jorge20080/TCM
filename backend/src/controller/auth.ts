@@ -2,16 +2,21 @@ import { Request, Response } from "express";
 import { prisma } from "../app";
 
 export const postSignup = async (req: Request, res: Response) => {
-    const user = await prisma.user.create(
-        {
-            data: {
-                firstName: "Jorge",
-                lastName: "Reyes",
-                email: "jorge20080@hotmail.com",
-                password: "1234"
+    try {
+        const user = await prisma.user.create(
+            {
+                data: {
+                    firstName: "Jorge",
+                    lastName: "Reyes",
+                    email: "jorge200800@hotmail.com",
+                    password: "1234"
+                }
             }
-        }
-    );
+        );
+    } catch {
+        res.json({ message: "error" });
+        return;
+    }
     const foundUsers = await prisma.user.findMany();
     res.json(foundUsers);
 }
