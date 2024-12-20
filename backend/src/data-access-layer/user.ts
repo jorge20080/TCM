@@ -1,5 +1,3 @@
-import { prisma } from "../app";
-import bcrypt from 'bcryptjs';
 import { TUser } from "../types/user";
 
 export class User {

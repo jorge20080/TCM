@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { postLogin, postSignup, putGenerateResetToken, putResetPassword, putVerifyEmail } from '../controller/auth';
-import { validateData } from '../middlewares/validateData';
+import { validateData } from '../middlewares/validate-data';
 import { signupValidation, loginValidation } from '../data-schemas/auth';
 
 const authRouter = Router();
