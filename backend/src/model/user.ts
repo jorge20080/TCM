@@ -9,12 +9,6 @@ type TUser = {
     password: string;
 }
 
-type TCondition = {
-    id?: string,
-    email?: string,
-    password?: string
-}
-
 export class User {
     id: string | undefined;
     firstName: string = "";
@@ -30,35 +24,7 @@ export class User {
         this.password = user.password;
     }
 
-    static async findBy({ id, email, password }: TCondition) {
-        try {
-            const user = await prisma.user.findUnique({
-                where: {
-                    id,
-                    email,
-                    password
-                }
-            });
-            return user;
-        } catch {
-            return;
-        }
-    }
-
     async save() {
-        try {
-            const hashedPass = await bcrypt.hash(this.password, 12);
-            await prisma.user.create({
-                data: {
-                    firstName: this.firstName,
-                    lastName: this.lastName,
-                    email: this.email,
-                    password: hashedPass
-                }
-            });
-            return true;
-        } catch {
-            return;
-        }
+
     }
 }
