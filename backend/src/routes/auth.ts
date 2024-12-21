@@ -7,8 +7,8 @@ const authRouter = Router();
 
 authRouter.post("/signup", validateData(signupValidation), postSignup);
 authRouter.post("/login", validateData(loginValidation), postLogin);
-authRouter.put("/verifyEmail", putVerifyEmail);
-authRouter.put("/generateResetToken", putGenerateResetToken);
-authRouter.put("/resetPassword", putResetPassword);
+authRouter.put("/verifyemail", putVerifyEmail);
+authRouter.put("/generateresettoken", putGenerateResetToken);
+authRouter.put("/resetpassword", putResetPassword);
 
 export default authRouter;
