@@ -10,8 +10,11 @@ export const postSignup = async (req: Request, res: Response, next: NextFunction
     res.json({ message: "user created", sucess });
 }
 
-export const postLogin = async (req: Request, res: Response) => {
-    res.json();
+export const postLogin = async (req: Request, res: Response, next: NextFunction) => {
+    const { email, password } = req.body;
+    const { error, token } = await User.login(email, password);
+    if (error) return next(error);
+    res.json({ message: "User logged", token });
 }
 
 export const putVerifyEmail = async (req: Request, res: Response, next: NextFunction) => {

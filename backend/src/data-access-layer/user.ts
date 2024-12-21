@@ -1,7 +1,8 @@
 import { db } from "../app";
-import { TUser, TUserSaveResponse } from "../types/user";
+import { TUser, TUserLoginResponse, TUserSaveResponse } from "../types/user";
 import bcrypt from 'bcryptjs';
 import { ErrorResponse } from "../utils/ErrorResponse";
+import jwt from 'jsonwebtoken';
 
 export class User {
     id?: string;
@@ -80,6 +81,23 @@ export class User {
             }
         } else {
             result.error = new ErrorResponse({ status: 404, message: "Failed to create user" })
+        }
+        return result;
+    }
+
+    static async login(email: string, password: string) {
+        let result: TUserLoginResponse = { error: null, token: null };
+        const user = await db.user.findUnique({ where: { email } });
+        if (!user) {
+            result.error = new ErrorResponse({ message: "User or Password Incorrect", status: 404 });
+        } else {
+            const doMatch = await bcrypt.compare(password, user.password);
+            console.log(doMatch)
+            if (!doMatch) {
+                result.error = new ErrorResponse({ message: "User or Password Incorrect", status: 404 });
+            }
+            const token = jwt.sign(user, process.env.SECRETTOKEN, { expiresIn: "24h" });
+            result.token = token;
         }
         return result;
     }

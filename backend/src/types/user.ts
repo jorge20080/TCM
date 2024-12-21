@@ -16,3 +16,7 @@ export type TUserSaveResponse = {
     sucess: boolean,
     error: null | ErrorResponse
 }
+export type TUserLoginResponse = {
+    error: null | ErrorResponse,
+    token: string | null
+}
