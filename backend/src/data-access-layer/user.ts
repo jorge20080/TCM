@@ -27,17 +27,18 @@ export class User {
         this.updatedAt = user.updatedAt;
         this.createdAt = user.createdAt;
     }
+
     async sendVerificationToken() {
 
     }
+
     static async verifyEmail(email: string, token: string) {
-        let result: TUserSaveResponse = { sucess: false, error: null }
-        const user = await db.user.findUnique({ where: { email } });
+        let result: TUserSaveResponse = { sucess: false, error: null };
         let message = "Failed to update user";
+        const user = await db.user.findUnique({ where: { email } });
 
         if (user.isVerified) {
             message = "User already verified";
-            console.log(message)
             result.error = new ErrorResponse({ status: 302, message })
         } else {
             if (user.verificationToken === token) {

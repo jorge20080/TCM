@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../data-access-layer/user";
+import { ErrorResponse } from "../utils/ErrorResponse";
 
 export const postSignup = async (req: Request, res: Response, next: NextFunction) => {
     const { givenName, lastName, email, password } = req.body;
@@ -15,6 +16,9 @@ export const postLogin = async (req: Request, res: Response) => {
 
 export const putVerifyEmail = async (req: Request, res: Response, next: NextFunction) => {
     const { email, token } = req.query;
+    if (!email || !token) {
+        return next(new ErrorResponse({ message: "Invalid Token or Email", status: 404 }))
+    }
     const { error, sucess } = await User.verifyEmail(email.toString(), token.toString());
     if (error) return next(error);
     res.json({ message: "Email has been verified", sucess });
