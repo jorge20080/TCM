@@ -1,6 +1,7 @@
 import { db } from "../app";
-import { TUser } from "../types/user";
+import { TUser, TUserSaveResponse } from "../types/user";
 import bcrypt from 'bcryptjs';
+import { ErrorResponse } from "../utils/ErrorResponse";
 
 export class User {
     id?: string;
@@ -28,6 +29,7 @@ export class User {
     }
 
     async save() {
+        let result: TUserSaveResponse = { sucess: false, error: null }
         if (!this.id) {
             const hashedPass = await bcrypt.hash(this.password, 12);
             const data = {
@@ -38,12 +40,17 @@ export class User {
             }
             try {
                 await db.user.create({ data });
-                return true;
-            } catch {
-                return false;
+                result.sucess = true;
+            } catch (e) {
+                let message = "Failed to create user";
+                if (e.code === "P2002") {
+                    message = "Email already exists"
+                }
+                result.error = new ErrorResponse({ status: 404, message })
             }
         } else {
-            return false;
+            result.error = new ErrorResponse({ status: 404, message: "Failed to create user" })
         }
+        return result;
     }
 }

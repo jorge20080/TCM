@@ -5,12 +5,9 @@ import { ErrorResponse } from "../utils/ErrorResponse";
 export const postSignup = async (req: Request, res: Response, next: NextFunction) => {
     const { givenName, lastName, email, password } = req.body;
     const user = new User({ givenName, lastName, email, password });
-    const result = await user.save();
-    if (!result) return next(new ErrorResponse({
-        message: "Unable to save user",
-        status: 400
-    }));
-    res.json({ message: "user created" });
+    const { error, sucess } = await user.save();
+    if (error) return next(error);
+    res.json({ message: "user created", sucess });
 }
 
 export const postLogin = async (req: Request, res: Response) => {

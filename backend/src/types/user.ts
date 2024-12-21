@@ -1,3 +1,5 @@
+import { ErrorResponse } from "../utils/ErrorResponse";
+
 export type TUser = {
     id?: string | undefined;
     givenName: string;
@@ -9,4 +11,8 @@ export type TUser = {
     resetToken?: string,
     updatedAt?: Date,
     createdAt?: Date
+}
+export type TUserSaveResponse = {
+    sucess: boolean,
+    error: null | ErrorResponse
 }
