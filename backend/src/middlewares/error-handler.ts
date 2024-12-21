@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { ErrorRequest } from "../utils/ErrorRequest";
+import { ErrorResponse } from "../utils/ErrorResponse";
 
-export const errorHandler = (error: ErrorRequest, req: Request, res: Response, next: NewableFunction) => {
+export const errorHandler = (error: ErrorResponse, req: Request, res: Response, next: NewableFunction) => {
     res.status(error.status).json({ error });
 }
