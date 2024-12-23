@@ -34,7 +34,7 @@ export class User {
     }
 
     static async verifyEmail(email: string, token: string) {
-        let result: TUserSaveResponse = { sucess: false, error: null };
+        let result: TUserSaveResponse = { success: false, error: null };
         let message = "Failed to update user";
         const user = await db.user.findUnique({ where: { email } });
 
@@ -47,7 +47,7 @@ export class User {
                 user.verificationToken = null;
                 try {
                     await db.user.update({ data: user, where: { email } });
-                    result.sucess = true;
+                    result.success = true;
                 } catch (e) {
                     result.error = new ErrorResponse({ status: 404, message })
                 }
@@ -66,7 +66,7 @@ export class User {
     }
 
     async save() {
-        let result: TUserSaveResponse = { sucess: false, error: null }
+        let result: TUserSaveResponse = { success: false, error: null }
         if (!this.id) {
             const hashedPass = await bcrypt.hash(this.password, 12);
             const data = {
@@ -77,7 +77,7 @@ export class User {
             }
             try {
                 await db.user.create({ data });
-                result.sucess = true;
+                result.success = true;
             } catch (e) {
                 let message = "Failed to create user";
                 if (e.code === "P2002") {
@@ -88,7 +88,7 @@ export class User {
         } else {
             try {
                 await db.user.update({ where: { id: this.id }, data: { ...this } });
-                result.sucess = true;
+                result.success = true;
             } catch (e) {
                 let message = "Failed to update user";
                 result.error = new ErrorResponse({ status: 404, message })

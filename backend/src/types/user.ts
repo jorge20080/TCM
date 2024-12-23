@@ -13,7 +13,7 @@ export type TUser = {
     createdAt?: Date
 }
 export type TUserSaveResponse = {
-    sucess: boolean,
+    success: boolean,
     error: null | ErrorResponse
 }
 export type TUserLoginResponse = {

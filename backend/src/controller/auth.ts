@@ -6,9 +6,9 @@ import crypto from 'crypto';
 export const postSignup = async (req: Request, res: Response, next: NextFunction) => {
     const { givenName, lastName, email, password } = req.body;
     const user = new User({ givenName, lastName, email, password });
-    const { error, sucess } = await user.save();
+    const { error, success } = await user.save();
     if (error) return next(error);
-    res.json({ message: "user created", sucess });
+    res.json({ message: "user created", success });
 }
 
 export const postLogin = async (req: Request, res: Response, next: NextFunction) => {
@@ -23,9 +23,9 @@ export const putVerifyEmail = async (req: Request, res: Response, next: NextFunc
     if (!email || !token) {
         return next(new ErrorResponse({ message: "Invalid Token or Email", status: 404 }))
     }
-    const { error, sucess } = await User.verifyEmail(email.toString(), token.toString());
+    const { error, success } = await User.verifyEmail(email.toString(), token.toString());
     if (error) return next(error);
-    res.json({ message: "Email has been verified", sucess });
+    res.json({ message: "Email has been verified", success });
 }
 
 export const putGenerateResetToken = async (req: Request, res: Response, next: NextFunction) => {
@@ -33,12 +33,11 @@ export const putGenerateResetToken = async (req: Request, res: Response, next: N
     let message = "Token sucessfully generated";
     if (!user.resetToken) user.resetToken = crypto.randomUUID();
     else message = "Token already generated";
-
-    const { error, sucess } = await user.save();
+    const { error, success } = await user.save();
     if (error) {
         return next(new ErrorResponse({ message: "Error generating token", status: 404 }))
     }
-    res.json({ token: user.resetToken, message });
+    res.json({ token: user.resetToken, message, success });
 }
 
 export const putResetPassword = (req: Request, res: Response) => {
