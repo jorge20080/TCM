@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../data-access-layer/user";
 import { ErrorResponse } from "../utils/ErrorResponse";
+import crypto from 'crypto';
 
 export const postSignup = async (req: Request, res: Response, next: NextFunction) => {
     const { givenName, lastName, email, password } = req.body;
@@ -27,8 +28,17 @@ export const putVerifyEmail = async (req: Request, res: Response, next: NextFunc
     res.json({ message: "Email has been verified", sucess });
 }
 
-export const putGenerateResetToken = (req: Request, res: Response) => {
-    res.json();
+export const putGenerateResetToken = async (req: Request, res: Response, next: NextFunction) => {
+    const user = await User.findById("61e0da62-6944-4404-a802-9cf5a42bb9f8");
+    let message = "Token sucessfully generated";
+    if (!user.resetToken) user.resetToken = crypto.randomUUID();
+    else message = "Token already generated";
+
+    const { error, sucess } = await user.save();
+    if (error) {
+        return next(new ErrorResponse({ message: "Error generating token", status: 404 }))
+    }
+    res.json({ token: user.resetToken, message });
 }
 
 export const putResetPassword = (req: Request, res: Response) => {

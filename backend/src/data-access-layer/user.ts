@@ -59,6 +59,12 @@ export class User {
         return result;
     }
 
+    static async findById(id: string) {
+        const user = await db.user.findUnique({ where: { id } });
+        if (user) return new User({ ...user });
+        else return null;
+    }
+
     async save() {
         let result: TUserSaveResponse = { sucess: false, error: null }
         if (!this.id) {
@@ -80,7 +86,13 @@ export class User {
                 result.error = new ErrorResponse({ status: 404, message })
             }
         } else {
-            result.error = new ErrorResponse({ status: 404, message: "Failed to create user" })
+            try {
+                await db.user.update({ where: { id: this.id }, data: { ...this } });
+                result.sucess = true;
+            } catch (e) {
+                let message = "Failed to update user";
+                result.error = new ErrorResponse({ status: 404, message })
+            }
         }
         return result;
     }
