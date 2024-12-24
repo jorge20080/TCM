@@ -7,7 +7,7 @@ import { errorHandler } from './middlewares/error-handler';
 config();
 
 export const db = new PrismaClient();
-
+const port = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.json());
@@ -16,6 +16,6 @@ app.use("/api/auth", authRouter);
 
 app.use("/", errorHandler);
 
-app.listen(process.env.PORT, () => {
-    console.log(`Connected to \x1b[35mhttp://localhost:${process.env.PORT}\x1b[0m`);
+app.listen(port, () => {
+    console.log(`Connected to \x1b[35mhttp://localhost:${port}\x1b[0m`);
 });

@@ -30,13 +30,13 @@ export class User {
         this.createdAt = user.createdAt;
     }
 
-    async sendVerificationTokenEmail() {
+    async sendWelcomeEmail() {
         const msg = {
-            to: 'jolusarez@gmail.com',
-            from: 'jolusarez@gmail.com',
-            subject: 'TCM Registration',
-            text: 'and easy to do anywhere, even with Node.js',
-            html: `<strong>verify your email: <a href="http://localhost:5173/?token=${this.verificationToken}">Link<a/></strong>`,
+            to: process.env.FROM_EMAIL,
+            from: process.env.FROM_EMAIL,
+            subject: 'Welcome to TCM, Please Verify Your Email Address',
+            text: 'Welcome to TCM, Please Verify Your Email Address',
+            html: `<div>Dear ${this.givenName}, <b/><b/> <p>Welcome to TCM!. To complete your registration and gain access to all our features, please verify your email address by clicking the link below:<b/> <a href="${process.env.FRONTEND_URL}/?token=${this.verificationToken}">Link<a/></p></div>`,
         }
         await Email.send(msg);
     }
@@ -87,7 +87,7 @@ export class User {
                 const user = await db.user.create({ data });
                 this.verificationToken = user.verificationToken;
                 result.success = true;
-                await this.sendVerificationTokenEmail();
+                await this.sendWelcomeEmail();
             } catch (e) {
                 let message = "Failed to create user";
                 if (e.code === "P2002") {
@@ -114,7 +114,6 @@ export class User {
             result.error = new ErrorResponse({ message: "User or Password Incorrect", status: 404 });
         } else {
             const doMatch = await bcrypt.compare(password, user.password);
-            console.log(doMatch)
             if (!doMatch) {
                 result.error = new ErrorResponse({ message: "User or Password Incorrect", status: 404 });
             }
