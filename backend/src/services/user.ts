@@ -3,6 +3,7 @@ import { TUser, TUserLoginResponse, TUserSaveResponse } from "../types/user";
 import bcrypt from 'bcryptjs';
 import { ErrorResponse } from "../utils/ErrorResponse";
 import jwt from 'jsonwebtoken';
+import { Email } from "./email";
 
 export class User {
     id?: string;
@@ -29,8 +30,15 @@ export class User {
         this.createdAt = user.createdAt;
     }
 
-    async sendVerificationToken() {
-
+    async sendVerificationTokenEmail() {
+        const msg = {
+            to: 'jolusarez@gmail.com',
+            from: 'jolusarez@gmail.com',
+            subject: 'TCM Registration',
+            text: 'and easy to do anywhere, even with Node.js',
+            html: `<strong>verify your email: <a href="http://localhost:5173/?token=${this.verificationToken}">Link<a/></strong>`,
+        }
+        await Email.send(msg);
     }
 
     static async verifyEmail(email: string, token: string) {
@@ -76,8 +84,10 @@ export class User {
                 password: hashedPass
             }
             try {
-                await db.user.create({ data });
+                const user = await db.user.create({ data });
+                this.verificationToken = user.verificationToken;
                 result.success = true;
+                await this.sendVerificationTokenEmail();
             } catch (e) {
                 let message = "Failed to create user";
                 if (e.code === "P2002") {
