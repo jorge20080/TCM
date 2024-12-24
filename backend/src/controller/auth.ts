@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { User } from "../data-access-layer/user";
+import { User } from "../services/user";
 import { ErrorResponse } from "../utils/ErrorResponse";
 import crypto from 'crypto';
 
