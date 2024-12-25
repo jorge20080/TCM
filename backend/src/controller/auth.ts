@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, response, Response } from "express";
 import { User } from "../services/user";
 import { ErrorResponse } from "../utils/error-response";
 import crypto from 'crypto';
@@ -15,7 +15,10 @@ export const postLogin = async (req: Request, res: Response, next: NextFunction)
     const { email, password } = req.body;
     const { error, token } = await User.login(email, password);
     if (error) return next(error);
-    res.json({ message: "User logged", token });
+    setTimeout(() => {
+        res.cookie("token", token, { httpOnly: true });
+        res.json({ message: "User logged", token });
+    }, 10000);
 }
 
 export const putVerifyEmail = async (req: Request, res: Response, next: NextFunction) => {
