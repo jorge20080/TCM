@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { User } from "../services/user";
-import { ErrorResponse } from "../utils/ErrorResponse";
+import { ErrorResponse } from "../utils/error-response";
 import crypto from 'crypto';
 
 export const postSignup = async (req: Request, res: Response, next: NextFunction) => {

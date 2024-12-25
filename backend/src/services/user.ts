@@ -1,7 +1,7 @@
 import { db } from "../app";
 import { TUser, TUserLoginResponse, TUserSaveResponse } from "../types/user";
 import bcrypt from 'bcryptjs';
-import { ErrorResponse } from "../utils/ErrorResponse";
+import { ErrorResponse } from "../utils/error-response";
 import jwt from 'jsonwebtoken';
 import { Email } from "./email";
 
