@@ -15,10 +15,8 @@ export const postLogin = async (req: Request, res: Response, next: NextFunction)
     const { email, password } = req.body;
     const { error, token } = await User.login(email, password);
     if (error) return next(error);
-    setTimeout(() => {
-        res.cookie("token", token, { httpOnly: true });
-        res.json({ message: "User logged", token });
-    }, 10000);
+    res.cookie("token", token, { httpOnly: true });
+    res.json({ message: "User logged", token });
 }
 
 export const putVerifyEmail = async (req: Request, res: Response, next: NextFunction) => {

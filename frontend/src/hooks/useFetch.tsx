@@ -7,12 +7,10 @@ type TFetchParams = {
 
 }
 export const useFetch = <T,>({ url, method, credentials }: TFetchParams) => {
-    const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState<T>();
     const [error, setError] = useState(false);
 
     const execute = async (payload?: object) => {
-        setIsLoading(true);
         const response = await fetch(url, {
             method: method || "GET",
             headers: {
@@ -26,7 +24,6 @@ export const useFetch = <T,>({ url, method, credentials }: TFetchParams) => {
             setError(true);
         }
         setData(await response.json());
-        setIsLoading(false);
     }
-    return { execute, isLoading, data, error }
+    return { execute, data, error }
 }
