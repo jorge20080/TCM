@@ -4,27 +4,31 @@ import TextBox from "../elements/TextBox";
 import Logo from "../Logo";
 import { useFetch } from "../../hooks/useFetch";
 import { TLoginResponse } from "../../types/login";
-import { useActionState, useEffect } from "react";
+import { use, useActionState, useEffect } from "react";
+import { authContext } from "../../context/auth-context";
 
 const LoginForm = () => {
+    const { login } = use(authContext);
     const navigate = useNavigate();
     const { error, data, execute } = useFetch<TLoginResponse>({
         url: "http://localhost:3000/api/auth/login",
         method: "POST",
         credentials: true,
     });
+
     useEffect(() => {
         if (data?.token) {
             navigate("/");
+            login();
         }
-    }, [data?.token, navigate]);
+    }, [data?.token, navigate, login]);
 
 
-    const [, loginAction, isPending] = useActionState(async (previousState: void | null, formData: FormData) => {
+    const [, loginAction, isPending] = useActionState(async (previousState: void, formData: FormData) => {
         const email = formData.get("email")?.toString() || "";
         const password = formData.get("password")?.toString() || "";
         await execute({ email, password });
-    }, null);
+    }, undefined);
 
     return (
         <div className="min-h-screen grid bg-gray-50">

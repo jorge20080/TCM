@@ -44,3 +44,8 @@ export const putGenerateResetToken = async (req: Request, res: Response, next: N
 export const putResetPassword = (req: Request, res: Response) => {
     res.json();
 }
+
+export const postLogout = (req: Request, res: Response) => {
+    res.clearCookie("token");
+    res.json({ message: "Logged out sucessfully" });
+}

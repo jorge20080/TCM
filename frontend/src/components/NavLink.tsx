@@ -2,12 +2,13 @@ import { NavLink } from "react-router-dom";
 
 type TProps = {
     children: string,
-    href: string
+    href: string,
+    className?: string
 }
 
-const NavigationLink = ({ children, href }: TProps) => {
+const NavigationLink = ({ children, href, className }: TProps) => {
     return (
-        <NavLink to={href} className={({ isActive }) => isActive ? "text-blue-500 font-bold" : "font-bold"}>{children}</NavLink>
+        <NavLink to={href} className={({ isActive }) => isActive ? "text-blue-500 font-bold " + className : "font-bold " + className}>{children}</NavLink>
     )
 }
 export default NavigationLink;

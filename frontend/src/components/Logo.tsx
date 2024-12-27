@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
+
 type TProps = {
     className?: string
 }
 const Logo = ({ className }: TProps) => {
-    return <h2 className={`text-3xl font-bold ${className}`}>TCM</h2>
+    return <Link to="/" className={`text-3xl font-bold block ${className}`}>TCM</Link>
 }
 export default Logo;
