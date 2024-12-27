@@ -24,7 +24,7 @@ const LoginForm = () => {
     }, [data?.token, navigate, login]);
 
 
-    const [, loginAction, isPending] = useActionState(async (previousState: void, formData: FormData) => {
+    const [, loginAction, isPending] = useActionState(async (_previousState: void, formData: FormData) => {
         const email = formData.get("email")?.toString() || "";
         const password = formData.get("password")?.toString() || "";
         await execute({ email, password });
