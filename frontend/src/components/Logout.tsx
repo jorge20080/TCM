@@ -14,10 +14,11 @@ const Logout = () => {
     });
 
     useEffect(() => {
-        logout();
-        execute();
-        navigate("/login");
-    }, [navigate, logout, execute]);
+        execute().then(() => {
+            logout();
+            return navigate("/login");
+        });
+    }, []);
 
     return (
         <>

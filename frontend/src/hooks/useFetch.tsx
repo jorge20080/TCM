@@ -11,6 +11,7 @@ export const useFetch = <T,>({ url, method, credentials }: TFetchParams) => {
     const [error, setError] = useState(false);
 
     const execute = async (payload?: object) => {
+        console.log("running")
         const response = await fetch(url, {
             method: method || "GET",
             headers: {

@@ -13,7 +13,12 @@ const NavBar = () => {
                     <NavigationLink href="/test">Test</NavigationLink>
                 </li>
                 <li>
-                    <NavigationLink href={`/${isUserLogged ? "logout" : "login"}`} className={`${isUserLogged ? "bg-red-400 text-white py-1 px-2 rounded" : null}`}>{`${isUserLogged ? "Logout" : "Login"}`}</NavigationLink>
+                    <NavigationLink
+                        href={`/${isUserLogged ? "logout" : "login"}`}
+                        className={`${isUserLogged ? "bg-red-400 text-white py-1 px-2 rounded" : null}`}
+                    >
+                        {`${isUserLogged ? "Logout" : "Login"}`}
+                    </NavigationLink>
                 </li>
             </ul>
         </nav>

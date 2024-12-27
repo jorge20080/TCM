@@ -17,9 +17,10 @@ function App() {
         },
         {
           path: "test",
-          element: <ProtectedRoute>
-            <p>test</p>
-          </ProtectedRoute>
+          element:
+            <ProtectedRoute>
+              <p>test</p>
+            </ProtectedRoute>
         }
       ]
     },

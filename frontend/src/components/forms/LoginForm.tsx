@@ -32,7 +32,6 @@ const LoginForm = () => {
 
     return (
         <div className="min-h-screen grid bg-gray-50">
-
             <form action={loginAction} className="shadow-2xl px-10 py-12 w-[400px] m-auto bg-white">
                 {error && <p>Error...</p>}
                 {isPending && <p>Loading...</p>}
