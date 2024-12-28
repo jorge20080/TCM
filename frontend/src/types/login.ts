@@ -1,10 +1,8 @@
-export type TLoginResponse = TLoginSucessResponse & TLoginErrorResponse
+import { TErrorResponse } from "./error"
 
-type TLoginSucessResponse = {
+export type TLoginResponse = TLoginSucessResponse & TErrorResponse
+
+export type TLoginSucessResponse = {
     token: string,
     message: string,
-}
-
-type TLoginErrorResponse = {
-    error: object
 }

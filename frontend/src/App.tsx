@@ -4,6 +4,7 @@ import LoginPage from "./pages/Login"
 import { AuthProvider } from "./components/provider/AuthProvider"
 import ProtectedRoute from "./components/ProtectedRoute"
 import Logout from "./components/Logout"
+import { NotificationProvider } from "./components/provider/NotificationProvider"
 
 function App() {
   const router = createBrowserRouter([
@@ -34,9 +35,11 @@ function App() {
     }
   ])
   return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <NotificationProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </NotificationProvider>
   )
 }
 

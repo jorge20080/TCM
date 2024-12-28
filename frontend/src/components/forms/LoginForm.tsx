@@ -6,6 +6,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { TLoginResponse } from "../../types/login";
 import { use, useActionState, useEffect } from "react";
 import { authContext } from "../../context/auth-context";
+import { notificationContext } from "../../context/notification-context";
 
 const LoginForm = () => {
     const { login } = use(authContext);
@@ -15,9 +16,16 @@ const LoginForm = () => {
         method: "POST",
         credentials: true,
     });
+    const { sendNotification, clearNotification } = use(notificationContext);
+
+    useEffect(() => {
+        if (error) sendNotification({ messages: [data?.error?.message || ""], fixed: true, type: "ERROR" })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [error, data?.error]);
 
     useEffect(() => {
         if (data?.token) {
+            clearNotification();
             navigate("/");
             login();
         }
@@ -33,8 +41,7 @@ const LoginForm = () => {
     return (
         <div className="min-h-screen grid bg-gray-50">
             <form action={loginAction} className="shadow-2xl px-10 py-12 w-[400px] m-auto bg-white">
-                {error && <p>Error...</p>}
-                {isPending && <p>Loading...</p>}
+                {/* {isPending && <p>Loading...</p>} */}
                 <Logo className="text-center mb-8" />
                 <TextBox label="Email" name="email" type="text" placeholder="john@mail.com" />
                 <TextBox label="Password" name="password" type="password" placeholder="Pass123" />
