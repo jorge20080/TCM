@@ -6,6 +6,7 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import Logout from "./components/Logout"
 import { NotificationProvider } from "./components/provider/NotificationProvider"
 import HomePage from "./pages/Home"
+import SignupPage from "./pages/Signup"
 
 function App() {
   const router = createBrowserRouter([
@@ -29,6 +30,10 @@ function App() {
     {
       path: "login",
       element: <LoginPage />
+    },
+    {
+      path: "signup",
+      element: <SignupPage />
     },
     {
       path: "logout",
