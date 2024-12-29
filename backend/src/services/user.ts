@@ -116,9 +116,15 @@ export class User {
             const doMatch = await bcrypt.compare(password, user.password);
             if (!doMatch) {
                 result.error = new ErrorResponse({ message: "User or Password Incorrect", status: 404 });
+            } else {
+                if (!user.isVerified) {
+                    result.error = new ErrorResponse({ message: "Email not verified", status: 404 });
+                } else {
+                    const token = jwt.sign(user, process.env.SECRETTOKEN, { expiresIn: "24h" });
+                    result.token = token;
+                }
             }
-            const token = jwt.sign(user, process.env.SECRETTOKEN, { expiresIn: "24h" });
-            result.token = token;
+
         }
         return result;
     }
