@@ -20,6 +20,9 @@ const LoginForm = () => {
 
     useEffect(() => {
         if (error) sendNotification({ messages: [data?.error?.message || ""], fixed: true, type: "ERROR" })
+        return () => {
+            clearNotification();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [error, data?.error]);
 
@@ -30,7 +33,7 @@ const LoginForm = () => {
             login();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data?.token, navigate, login]);
+    }, [data?.token]);
 
 
     const [state, loginAction, isPending] = useActionState(async (_previousState: { email: string, password: string }, formData: FormData) => {
