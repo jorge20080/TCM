@@ -3,8 +3,11 @@ type TProps = {
     type: "text" | "password",
     placeholder?: string,
     name: string
-}
-const TextBox = ({ label, type, placeholder, name }: TProps) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+} & { [rest: string]: any }
+
+const TextBox = (props: TProps) => {
+    const { label, type, placeholder, name, ...rest } = props;
     return (
         <label className="font-semibold text-gray-800">
             {label}
@@ -13,6 +16,7 @@ const TextBox = ({ label, type, placeholder, name }: TProps) => {
                 type={type}
                 placeholder={placeholder}
                 name={name}
+                {...rest}
             />
         </label>
     )
