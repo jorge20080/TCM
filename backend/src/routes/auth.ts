@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { postLogin, postLogout, postSignup, putGenerateResetToken, putResetPassword, putVerifyEmail } from '../controller/auth';
-import { validateData } from '../middlewares/validate-data';
-import { signupValidation, loginValidation } from '../data-schemas/auth';
+import { postLogin, postLogout, postSignup, putGenerateResetToken, putResetPassword, putVerifyEmail } from '../controller/auth.js';
+import { loginValidation, signupValidation } from '../data-schemas/auth.js';
+import { validateData } from '../middlewares/validate-data.js';
 
 const authRouter = Router();
 

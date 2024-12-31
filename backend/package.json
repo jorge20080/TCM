@@ -25,7 +25,7 @@
     "name": "backend",
     "version": "1.0.0",
     "main": "src/app.ts",
-    "type": "commonjs",
+    "type": "module",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "concurrently --kill-others \"npx tsc --watch\"   \"node --watch ./dist/app.js\"   \"cd ../frontend && npm run dev\""

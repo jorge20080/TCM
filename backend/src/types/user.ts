@@ -1,4 +1,4 @@
-import { ErrorResponse } from "../utils/error-response";
+import { ErrorResponse } from "../utils/error-response.js";
 
 export type TUser = {
     id?: string | undefined;

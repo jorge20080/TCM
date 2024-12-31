@@ -1,9 +1,9 @@
-import { db } from "../app";
-import { TUser, TUserLoginResponse, TUserSaveResponse } from "../types/user";
+import { db } from "../app.js";
+import { TUser, TUserLoginResponse, TUserSaveResponse } from "../types/user.js";
 import bcrypt from 'bcryptjs';
-import { ErrorResponse } from "../utils/error-response";
+import { ErrorResponse } from "../utils/error-response.js";
 import jwt from 'jsonwebtoken';
-import { Email } from "./email";
+import { Email } from "./email.js";
 
 export class User {
     id?: string;
