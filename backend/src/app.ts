@@ -2,8 +2,8 @@ import express from 'express';
 import { config } from 'dotenv';
 import authRouter from './routes/auth';
 import { PrismaClient } from '@prisma/client';
-import { errorHandler } from './middlewares/error-handler';
 import cors from 'cors';
+import { errorHandler } from './middlewares/error-handler';
 
 config();
 export const db = new PrismaClient();

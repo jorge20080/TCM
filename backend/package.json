@@ -25,10 +25,10 @@
     "name": "backend",
     "version": "1.0.0",
     "main": "src/app.ts",
-    "type": "module",
+    "type": "commonjs",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node --watch --no-warnings --loader ts-node/esm ./src/app.ts"
+        "dev": "concurrently --kill-others \"npx tsc --watch\"   \"node --watch ./dist/app.js\"   \"cd ../frontend && npm run dev\""
     },
     "keywords": [],
     "author": "",
