@@ -10,6 +10,8 @@ export type TNotification = {
     fixed: boolean,
     duration?: number,
     type: "ERROR" | "WARNING" | "SUCCESS"
+    persistBetweenPages?: boolean,
+
 }
 
 export const notificationContext = createContext({} as TNotificationContext);

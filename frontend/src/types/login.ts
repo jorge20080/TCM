@@ -6,3 +6,7 @@ export type TLoginSucessResponse = {
     token: string,
     message: string,
 }
+export type TLoginParams = {
+    email: string,
+    password: string
+}
