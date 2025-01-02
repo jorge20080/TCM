@@ -6,7 +6,7 @@ export const signupValidation = z.object({
     email: z.string({ message: "Email required" }).email({ message: "Invalid Email Format" }),
     password: z.string({ message: "Password required" }).min(8, { message: "Password should be at least 8 characters" }),
     confirmPassword: z.string({ message: "Password Confirmation required" })
-}).refine(({ confirmPassword, password }) => confirmPassword === password, { message: "Password do not match" });
+}).refine(({ confirmPassword, password }) => confirmPassword === password, { message: "Password do not match", path: ["confirmPassword"] });
 
 export const loginValidation = z.object({
     email: z.string({ message: "Email required" }).email({ message: "Invalid Email Format" }),
