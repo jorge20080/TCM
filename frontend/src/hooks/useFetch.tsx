@@ -23,11 +23,8 @@ export const useFetch = <T,>({ url, method, credentials }: TFetchParams) => {
             credentials: credentials ? "include" : "omit"
         });
         const result = await response.json();
-        console.log(result)
         if (!response.ok) {
-            if (result.message) {
-                sendNotification({ messages: [result.message], fixed: true, type: "ERROR" });
-            }
+            sendNotification({ messages: [result.message], fixed: true, type: "ERROR" });
             setError(result.error);
 
         }
