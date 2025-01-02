@@ -6,7 +6,6 @@ import { useFetch } from "../../hooks/useFetch";
 import { TLoginParams, TLoginResponse } from "../../types/login";
 import { use, useActionState, useEffect } from "react";
 import { authContext } from "../../context/auth-context";
-//import { notificationContext } from "../../context/notification-context";
 
 const LoginForm = () => {
     const { login } = use(authContext);
@@ -28,7 +27,6 @@ const LoginForm = () => {
 
 
     const [state, loginAction, isPending] = useActionState(async (_previousState: TLoginParams, formData: FormData) => {
-        console.log(error)
         const email = formData.get("email")?.toString() || "";
         const password = formData.get("password")?.toString() || "";
         await execute({ email, password });
@@ -38,7 +36,6 @@ const LoginForm = () => {
     return (
         <div className="min-h-screen grid bg-gray-50">
             <form action={loginAction} className="shadow-2xl px-10 py-12 md:w-[450px] md:m-auto bg-white">
-                {/* {isPending && <p>Loading...</p>} */}
                 <Logo className="mb-8 mx-auto" />
                 <TextBox error={error?.email} defaultValue={state.email} label="Email" name="email" type="text" placeholder="john@mail.com" />
                 <TextBox error={error?.password} defaultValue={state.password} label="Password" name="password" type="password" placeholder="Pass123" />

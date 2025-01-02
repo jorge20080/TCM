@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { use, useState } from "react"
+import { notificationContext } from "../context/notification-context";
 
 type TFetchParams = {
     url: string,
@@ -9,6 +10,7 @@ type TFetchParams = {
 export const useFetch = <T,>({ url, method, credentials }: TFetchParams) => {
     const [data, setData] = useState<T>();
     const [error, setError] = useState<{ [key: string]: string }>();
+    const { sendNotification } = use(notificationContext);
 
     const execute = async (payload?: object) => {
         const response = await fetch(url, {
@@ -21,9 +23,13 @@ export const useFetch = <T,>({ url, method, credentials }: TFetchParams) => {
             credentials: credentials ? "include" : "omit"
         });
         const result = await response.json();
+        console.log(result)
         if (!response.ok) {
-            console.log(result)
-            setError(result.error || result.message);
+            if (result.message) {
+                sendNotification({ messages: [result.message], fixed: true, type: "ERROR" });
+            }
+            setError(result.error);
+
         }
         setData(result);
     }
