@@ -6,8 +6,8 @@ const NotificationBanner = () => {
     return (
         <>
             <aside className={
-                `bg-${notification.type === "ERROR" ? "red" : "green"}-50 max-h-[120px] overflow-y-auto absolute top-4 right-4 w-[350px] text-${notification.type === "ERROR" ? "red" : "green"}-600
-                px-4 transition-all ease-in-out scale-0 duration-300 rounded-lg
+                `${notification.type === "ERROR" ? "bg-red-50" : "bg-green-50"} max-h-[120px] overflow-y-auto absolute top-4 right-4 w-[350px] text-${notification.type === "ERROR" ? "red" : "green"}-600
+                px-4 transition-all ease-in-out scale-0 duration-300 rounded-lg z-20
                 shadow-md text-sm flex items-center gap-4 overflow-hidden origin-top-right
                 ${notification.messages.length > 0 ? " scale-100 py-3" : null}`}
             >

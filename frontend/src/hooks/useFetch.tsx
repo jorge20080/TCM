@@ -8,7 +8,7 @@ type TFetchParams = {
 }
 export const useFetch = <T,>({ url, method, credentials }: TFetchParams) => {
     const [data, setData] = useState<T>();
-    const [error, setError] = useState(false);
+    const [error, setError] = useState<{ [key: string]: string }>();
 
     const execute = async (payload?: object) => {
         const response = await fetch(url, {
@@ -20,10 +20,12 @@ export const useFetch = <T,>({ url, method, credentials }: TFetchParams) => {
             body: JSON.stringify(payload),
             credentials: credentials ? "include" : "omit"
         });
+        const result = await response.json();
         if (!response.ok) {
-            setError(true);
+            console.log(result)
+            setError(result.error || result.message);
         }
-        setData(await response.json());
+        setData(result);
     }
     return { execute, data, error }
 }
