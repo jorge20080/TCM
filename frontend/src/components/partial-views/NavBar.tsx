@@ -16,7 +16,7 @@ const NavBar = () => {
     });
 
     const logoutAction = async () => {
-        await execute(undefined, false);
+        await execute(undefined, true);
         if (error === undefined) {
             logout();
             navigate("/login");
@@ -27,7 +27,7 @@ const NavBar = () => {
     return (
         <nav className="flex justify-between px-10 mb-6 items-center py-4">
             <Logo />
-            <ul className="flex gap-8">
+            <ul className="flex gap-8 items-center">
                 <li>
                     <NavigationLink href="/test">Test</NavigationLink>
                 </li>

@@ -12,7 +12,7 @@ export const useFetch = <T,>({ url, method, credentials }: TFetchParams) => {
     const [error, setError] = useState<{ [key: string]: string }>();
     const { sendNotification } = use(notificationContext);
 
-    const execute = async (payload?: object, showNotificationOnError?: boolean) => {
+    const execute = async (payload?: object, hideNotification?: true) => {
         const response = await fetch(url, {
             method: method || "GET",
             headers: {
@@ -24,9 +24,9 @@ export const useFetch = <T,>({ url, method, credentials }: TFetchParams) => {
         });
         const result = await response.json();
         if (!response.ok) {
-            if (showNotificationOnError) sendNotification({ messages: [result.message], fixed: true, type: "ERROR" });
+            if (!hideNotification) sendNotification({ messages: [result.message], fixed: true, type: "ERROR" });
             setError(result.error);
-        }
+        } else setError(undefined);
         setData(result);
     }
     return { execute, data, error }
