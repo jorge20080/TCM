@@ -3,7 +3,6 @@ import RootLayout from "./components/RootLayout"
 import LoginPage from "./pages/Login"
 import { AuthProvider } from "./components/provider/AuthProvider"
 import ProtectedRoute from "./components/ProtectedRoute"
-import Logout from "./components/Logout"
 import { NotificationProvider } from "./components/provider/NotificationProvider"
 import HomePage from "./pages/Home"
 import SignupPage from "./pages/Signup"
@@ -34,10 +33,6 @@ function App() {
     {
       path: "signup",
       element: <SignupPage />
-    },
-    {
-      path: "logout",
-      element: <Logout />
     }
   ])
   return (

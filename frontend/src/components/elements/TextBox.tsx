@@ -4,8 +4,7 @@ type TProps = {
     placeholder?: string,
     name: string
     error?: string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-} & { [rest: string]: any }
+} & { [rest: string]: string | boolean | undefined }
 
 const TextBox = (props: TProps) => {
     const { label, type, placeholder, name, error, ...rest } = props;
