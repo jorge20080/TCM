@@ -26,7 +26,6 @@ export const useFetch = <T,>({ url, method, credentials }: TFetchParams) => {
         if (!response.ok) {
             sendNotification({ messages: [result.message], fixed: true, type: "ERROR" });
             setError(result.error);
-
         }
         setData(result);
     }

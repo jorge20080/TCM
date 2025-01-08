@@ -1,5 +1,5 @@
 import sgMail from '@sendgrid/mail';
-import { TMessage } from '../types/email';
+import { TMessage } from '../types/email.js';
 
 export class Email {
     static async send(msg: TMessage) {
