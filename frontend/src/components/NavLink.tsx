@@ -1,7 +1,8 @@
+import { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 
 type TProps = {
-    children: string,
+    children: ReactNode,
     href: string,
     className?: string
 }
